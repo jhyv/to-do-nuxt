@@ -1,7 +1,9 @@
 <template>
-    <div class="default-page">
-        <slot></slot>
-    </div>
+    <v-app>
+        <div class="default-page">
+            <slot></slot>
+        </div>
+    </v-app>
 </template>
 
 <style lang="scss" scoped>
