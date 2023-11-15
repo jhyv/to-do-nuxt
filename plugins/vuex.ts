@@ -20,14 +20,20 @@ const store = createStore({
             state.tasks = [...tasks];
         },
         newTask(state: any, task: any) {
-            const id = parseInt(getStorage('incrementId'));
+            let id = parseInt(getStorage('incrementId'));
+            // flag if id is not present in local storage
+            if (!id) {
+                const tasksArr = [...state.tasks];
+                id = tasksArr.length > 0 ? parseInt(tasksArr.sort((a: any, b: any) => b.id - a.id)[0].id) + 1 : 1;
+            }
+
             state.tasks = [...state.tasks, { ...task, id }];
 
             setStorage('tasks', state.tasks);
             setStorage('incrementId', id + 1);
         },
         updateTask(state: any, { id, task }) {
-            state.tasks = [...state.tasks.map((t: any, i: number) => {
+            state.tasks = [...state.tasks.map((t: any) => {
                 if (id == t.id) {
                     return task;
                 }

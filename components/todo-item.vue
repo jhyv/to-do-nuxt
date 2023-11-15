@@ -3,12 +3,14 @@
     <v-card-item>
       <div class="todo-item">
         <div class="todo-action-start">
-          <v-btn variant="text" icon="mdi-check-circle-outline" density="compact" @click="setTaskToDone">
+          <v-btn variant="text" icon="mdi-check-circle" density="compact" @click="setTaskToDone"
+            :color="!task.status.done ? 'success' : ''">
           </v-btn>
         </div>
         <div class="todo-text">{{ task.name }}</div>
         <div class="todo-action-end">
-          <v-btn variant="text" icon="mdi-delete-outline" density="compact" @click="removeTask">
+          <v-btn variant="text" icon="mdi-delete" density="compact" @click="removeTask"
+            :color="!task.status.done ? 'red' : ''">
           </v-btn>
         </div>
       </div>
@@ -43,7 +45,7 @@ const setTaskToDone = () => {
 }
 
 .todo-card.todo-done {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .todo-card.todo-done .todo-item .todo-text {

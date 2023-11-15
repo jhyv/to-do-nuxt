@@ -13,7 +13,7 @@
         </div>
         <div class="todo-list" ref="todoContainer">
           <v-slide-x-transition group tag="TodoItem">
-            <template v-for="(task, i) in tasks" :key="`todo_task_item_${i}`">
+            <template v-for="task in tasks" :key="`todo_task_item_${task.id}`">
               <todo-item :task="task"></todo-item>
             </template>
           </v-slide-x-transition>
