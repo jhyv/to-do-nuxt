@@ -19,3 +19,7 @@ Start the development server on `http://localhost:3000`:
 # npm
 npm run dev
 ```
+
+## Demo
+
+![alt text](/public/demo/demo.gif)
