@@ -1,14 +1,14 @@
 <template>
-  <v-card variant="outlined" elevation="3" class="todo-card">
+  <v-card elevation="3" class="todo-card" :class="task.status.done && 'todo-done'">
     <v-card-item>
       <div class="todo-item">
         <div class="todo-action-start">
-          <v-btn variant="text" icon="mdi-check-circle-outline" density="compact">
+          <v-btn variant="text" icon="mdi-check-circle-outline" density="compact" @click="setTaskToDone">
           </v-btn>
         </div>
-        <div class="todo-text">{{ task.text }}</div>
+        <div class="todo-text">{{ task.name }}</div>
         <div class="todo-action-end">
-          <v-btn variant="text" icon="mdi-delete-outline" density="compact">
+          <v-btn variant="text" icon="mdi-delete-outline" density="compact" @click="removeTask">
           </v-btn>
         </div>
       </div>
@@ -17,17 +17,37 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
+import { useStore } from 'vuex';
+
+const store = useStore()
+const { task } = defineProps({
   task: {
     type: Object,
     required: true
   }
 });
+
+const removeTask = () => {
+  store.dispatch('removeTask', task.id)
+}
+
+const setTaskToDone = () => {
+  store.dispatch('updateTask', { id: task.id, task: { ...task, status: { done: true } } })
+}
 </script>
 
 <style scoped>
 .todo-card {
   margin-bottom: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.todo-card.todo-done {
+  opacity: 0.6;
+}
+
+.todo-card.todo-done .todo-item .todo-text {
+  text-decoration: line-through;
 }
 
 .todo-item {
@@ -58,7 +78,7 @@ const props = defineProps({
   cursor: pointer;
 }
 
-.todo-item:hover .todo-action-end {
+.todo-card:not(.todo-done) .todo-item:hover .todo-action-end {
   user-select: unset;
   opacity: 1;
 }
